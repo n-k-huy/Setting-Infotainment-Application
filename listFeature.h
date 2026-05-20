@@ -3,25 +3,6 @@
 
 #include "Common.h"
 
-bool compareID(const std::vector <int>& id1, const std::vector <int>& id2)
-{
-	return (id1 < id2);
-}
-
-bool compareName(const std::string& name1, const std::string& name2)
-{
-	// Find the first character in name of user
-	char firstAphabetName1 = name1.length() - 1;
-	char firstAlphabetName2 = name2.length() - 1;
-
-	while (name1.at(firstAphabetName1) != ' ')
-		firstAphabetName1--;
-	while (name2.at(firstAlphabetName2) != ' ')
-		firstAlphabetName2--;
-
-	return (name1.at(firstAphabetName1 + 1) < name2.at(firstAlphabetName2 + 1));
-}
-
 template <class T>
 class listFeature
 {
@@ -66,7 +47,11 @@ inline std::vector<std::shared_ptr<T>> listFeature<T>::sortFollowID()
 {
 	std::vector <std::shared_ptr <T>> result = settingList;
 	
-	std::sort(result.begin(), result.end(), compareID);
+	std::sort(result.begin(), result.end(),
+		[](const std::shared_ptr<T>& a, const std::shared_ptr<T>& b)
+		{
+			return a->getId() < b->getId();
+		});
 
 	return result;
 }
@@ -76,7 +61,23 @@ inline std::vector<std::shared_ptr<T>> listFeature<T>::sortFollowName()
 {
 	std::vector <std::shared_ptr <T>> result = settingList;
 
-	std::sort(result.begin(), result.end(), compareName);
+	std::sort(result.begin(), result.end(),
+		[](const std::shared_ptr<T>& a, const std::shared_ptr<T>& b)
+		{
+			// Find the first character in name of user
+			std::string name1 = a->getOwnerName();
+			std::string name2 = b->getOwnerName();
+
+			char firstAphabetName1 = name1.length() - 1;
+			char firstAlphabetName2 = name2.length() - 1;
+
+			while (name1.at(firstAphabetName1) != ' ')
+				firstAphabetName1--;
+			while (name2.at(firstAlphabetName2) != ' ')
+				firstAlphabetName2--;
+
+			return (name1.at(firstAphabetName1 + 1) < name2.at(firstAlphabetName2 + 1));
+		});
 
 	return result;
 }
@@ -90,9 +91,13 @@ inline int listFeature<T>::findFollowID()
 	for (int& num : findingId)
 		std::cin >> num;
 
-	std::vector <int>::iterator pos = std::find(settingList.begin(), settingList.end(), findingId);
+	auto pos = std::find_if(settingList.begin(), settingList.end(),
+		[&](const std::shared_ptr<T>& car)
+		{
+			return car->getId() == findingId;
+		});
 
-	return pos;
+	return static_cast<int>(std::distance(settingList.begin(), pos));
 }
 
 template<class T>

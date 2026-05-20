@@ -1,1 +1,1 @@
-Common: kim huy/nguyenhuy@gmail.com/
+Common: kim huy/nguyenhuy@gmail.com/12345678/4567/5000 Display: 1/2/3 Sound: 1/2/3/4 General: Vietnamese/(GMT+07:00) Bangkok, Hanoi, Jakarta
