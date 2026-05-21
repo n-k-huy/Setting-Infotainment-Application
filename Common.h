@@ -9,7 +9,7 @@
 #include <memory>
 #include <algorithm>
 
-#define NUMBER_MENU_MODE 3
+#define NUMBER_MENU_MODE 4
 #define NUMBER_SETTING_MENU_MODE 4
 #define NUNMBER_PRINT_SETTING_MENU_MODE 5
 

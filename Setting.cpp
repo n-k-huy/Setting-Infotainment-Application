@@ -114,8 +114,13 @@ int inputOrderCar(const std::vector <std::shared_ptr <Car_infor>>& carInfo)
 	return orderCar;
 }
 
-void chooseSettingMenu(std::vector <std::shared_ptr<Car_infor>>& dis_infor, std::vector <std::shared_ptr<Car_infor>>& sound_info, std::vector <std::shared_ptr<Car_infor>>& general_info)
+void chooseSettingMenu(listFeature <Car_infor>& display, listFeature <Car_infor>& sound, listFeature <Car_infor>& general)
 {
+	// Take setting info
+	auto dis_infor = display.getSettingList();
+	auto sound_info = sound.getSettingList();
+	auto general_info = general.getSettingList();
+
 	std::string chooseMode;
 	char wantToChooseMore = 'Y';
 
@@ -230,7 +235,7 @@ void chooseSettingMenu(std::vector <std::shared_ptr<Car_infor>>& dis_infor, std:
 							case 9:
 							{
 								system("cls");
-								return chooseSettingMenu(dis_infor, sound_info, general_info);
+								return chooseSettingMenu(display, sound, general);
 							}
 							default:
 							{
@@ -351,7 +356,7 @@ void chooseSettingMenu(std::vector <std::shared_ptr<Car_infor>>& dis_infor, std:
 							case 10:
 							{
 								system("cls");
-								return chooseSettingMenu(dis_infor, sound_info, general_info);
+								return chooseSettingMenu(display, sound, general);
 							}
 							default:
 							{
@@ -470,7 +475,7 @@ void chooseSettingMenu(std::vector <std::shared_ptr<Car_infor>>& dis_infor, std:
 							case 8:
 							{
 								system("cls");
-								return chooseSettingMenu(dis_infor, sound_info, general_info);
+								return chooseSettingMenu(display, sound, general);
 							}
 							default:
 							{
@@ -513,15 +518,23 @@ void chooseSettingMenu(std::vector <std::shared_ptr<Car_infor>>& dis_infor, std:
 			case ('0' + NUMBER_SETTING_MENU_MODE):
 			{
 				system("cls");
-				chooseMenu(dis_infor, sound_info, general_info);
+				chooseMenu(display, sound, general);
 			}
 		}
 	}
+
+	display.setSettingList(dis_infor);
+	sound.setSettingList(sound_info);
+	general.setSettingList(general_info);
 }
 
-
-void choosePrintSettingMenu(std::vector <std::shared_ptr<Car_infor>>& dis_infor, std::vector <std::shared_ptr<Car_infor>>& sound_info, std::vector <std::shared_ptr<Car_infor>>& general_info)
+void choosePrintSettingMenu(listFeature <Car_infor>& display, listFeature <Car_infor>& sound, listFeature <Car_infor>& general)
 {
+	// Take setting info
+	auto dis_infor = display.getSettingList();
+	auto sound_info = sound.getSettingList();
+	auto general_info = general.getSettingList();
+
 	std::string chooseMode;
 	char wantToChooseMore = 'Y';
 
@@ -666,13 +679,170 @@ void choosePrintSettingMenu(std::vector <std::shared_ptr<Car_infor>>& dis_infor,
 			}
 			case ('0' + NUNMBER_PRINT_SETTING_MENU_MODE):
 			{
-				return chooseMenu(dis_infor, sound_info, general_info);
+				return chooseMenu(display, sound, general);
 			}
 		}
 	}
 }
 
-void chooseMenu(std::vector <std::shared_ptr<Car_infor>>& dis_infor, std::vector <std::shared_ptr<Car_infor>>& sound_info, std::vector <std::shared_ptr<Car_infor>>& general_info)
+void chooseSortModeMenu(listFeature <Car_infor>& display, listFeature <Car_infor>& sound, listFeature <Car_infor>& general)
+{
+	// Take setting info
+	auto dis_infor = display.getSettingList();
+	auto sound_info = sound.getSettingList();
+	auto general_info = general.getSettingList();
+
+	std::string chooseMode;
+	char wantToChooseMore = 'Y';
+
+	// Chon menu
+	while (wantToChooseMore == 'Y' || wantToChooseMore == 'y')
+	{
+		// Nhap du lieu cho nguoi dung
+		do
+		{
+			// Hien thi menu cho nguoi dung
+			// printSortModeMenu();
+
+			// Nguoi dung nhap du lieu
+			std::getline(std::cin, chooseMode);
+
+			// Dua ra thong bao nguoi dung nhap sai
+			if (chooseMode.length() > 1 || chooseMode[0] < '0' || chooseMode[0] > ('0' + NUNMBER_PRINT_SETTING_MENU_MODE))
+			{
+				std::cout << "NHAP SAI. VUI LONG NHAP LAI." << std::endl;
+				system("pause");
+				system("cls");
+				std::cin.ignore(1);
+			}
+
+
+		} while (chooseMode.length() > 1 || chooseMode[0] < '0' || chooseMode[0] > ('0' + NUNMBER_PRINT_SETTING_MENU_MODE));
+
+		// Lua chon Mode
+		system("cls");
+		switch (chooseMode[0])
+		{
+			case '1':
+			{
+				// STT	OWNER NAME	ID	ODO	SERVICE REMIND	LIGHT	SCREEN LIGHT	TAPLO LIGHT
+				try
+				{
+					dis_infor.at(0)->outputFormat();
+				}
+				catch (const std::out_of_range& e)
+				{
+					std::cout << "Exception: " << e.what() << std::endl;
+				}
+				outputInforCar(dis_infor);
+
+				system("pause");
+				system("cls");
+
+				break;
+			}
+			case '2':
+			{
+				// STT	OWNER NAME	ID	ODO	SERVICE REMIND	MEDIA	CALL	NAVIGATION	NOTIFICATION
+				try
+				{
+					sound_info.at(0)->outputFormat();
+				}
+				catch (const std::out_of_range& e)
+				{
+					std::cout << e.what() << std::endl;
+				}
+				outputInforCar(sound_info);
+
+				system("pause");
+				system("cls");
+
+				break;
+			}
+			case '3':
+			{
+				// STT	OWNER NAME	ID	ODO	SERVICE REMIND	TIME ZONE	LANGUAGE
+				try
+				{
+					general_info.at(0)->outputFormat();
+				}
+				catch (const std::out_of_range& e)
+				{
+					std::cout << e.what() << std::endl;
+				}
+				outputInforCar(general_info);
+
+				system("pause");
+				system("cls");
+
+				break;
+			}
+			case '4':
+			{
+				try
+				{
+					std::cout << std::left << std::setw(6) << "STT";			// STT
+					std::cout << std::left << std::setw(20) << "OWNER NAME";  // Name
+					std::cout << std::left << std::setw(15) << "ID";              // Id
+					std::cout << std::left << std::setw(30) << "EMAIL";      // Email
+					std::cout << std::left << std::setw(15) << "ODO";        // Odo
+					std::cout << std::left << std::setw(20) << "SERVICE REMIND";      // Service remind
+
+					std::cout << std::left << std::setw(20) << "LIGHT";			// Light level
+					std::cout << std::left << std::setw(20) << "SCREEN LIGHT";      // Screen light level
+					std::cout << std::left << std::setw(20) << "TAPLO LIGHT";      // Taplo 
+
+					std::cout << std::left << std::setw(20) << "MEDIA";			// Media volumn level
+					std::cout << std::left << std::setw(20) << "CALL";      // Call volumn level
+					std::cout << std::left << std::setw(20) << "NAVIGATION";      // Navigation volumn level
+					std::cout << std::left << std::setw(20) << "NOTIFICATION";      // Notification volumn level
+
+					std::cout << std::left << std::setw(50) << "TIME ZONE";			// Time zone
+					std::cout << std::left << std::setw(20) << "LANGUAGE";          // Language
+
+					std::cout << std::endl;
+
+					for (int index = 0; index < dis_infor.size(); index++)
+					{
+						std::cout << index + 1 << std::left << std::setw(5) << ".";
+
+						std::cout << std::left << std::setw(20) << dis_infor.at(index)->getOwnerName();  // Name
+
+						std::string id;
+						for (const int& val : dis_infor.at(index)->getId())
+							id += std::to_string(val);
+						std::cout << std::left << std::setw(15) << id;              // Id
+
+						std::cout << std::left << std::setw(30) << dis_infor.at(index)->getEmail();      // Email
+						std::cout << std::left << std::setw(15) << dis_infor.at(index)->getOdo();        // Odo
+						std::cout << std::left << std::setw(20) << std::to_string(dis_infor.at(index)->getServiceRemind());      // Service remind
+
+						dis_infor.at(index)->outputDistinctAttribute();
+						sound_info.at(index)->outputDistinctAttribute();
+						general_info.at(index)->outputDistinctAttribute();
+
+						std::cout << std::endl;
+					}
+				}
+				catch (const std::out_of_range& e)
+				{
+					std::cout << e.what() << std::endl;
+				}
+
+				system("pause");
+				system("cls");
+
+				break;
+			}
+			case ('0' + NUNMBER_PRINT_SETTING_MENU_MODE):
+			{
+				return chooseMenu(display, sound, general);
+			}
+		}
+	}
+}
+
+void chooseMenu(listFeature <Car_infor>& display, listFeature <Car_infor>& sound, listFeature <Car_infor>& general)
 {
 	std::string chooseMode;
 	char wantToChooseMore = 'Y';
@@ -706,12 +876,17 @@ void chooseMenu(std::vector <std::shared_ptr<Car_infor>>& dis_infor, std::vector
 		{
 			case '1':
 			{
-				chooseSettingMenu(dis_infor, sound_info, general_info);
+				chooseSettingMenu(display, sound, general);
 				break;
 			}
 			case '2':
 			{
-				choosePrintSettingMenu(dis_infor, sound_info, general_info);
+				choosePrintSettingMenu(display, sound, general);
+				break;
+			}
+			case '3':
+			{
+				chooseSortModeMenu(display, sound, general);
 				break;
 			}
 			case ('0' + NUMBER_MENU_MODE):

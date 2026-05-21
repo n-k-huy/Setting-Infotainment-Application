@@ -5,6 +5,7 @@
 #include "Display.h"
 #include "Sound.h"
 #include "General.h"
+#include "listFeature.h"
 
 std::string chooseModeToChangeCarInfo(char mode, int order, std::vector <std::shared_ptr <Car_infor>>& carInfor);
 
@@ -18,10 +19,12 @@ void settingMenu();	// Giao dien Cai dat du lieu xe
 
 void printSettingMenu();	// Giao dien xuat du lieu xe da duoc cai dat
 
-void chooseSettingMenu(std::vector <std::shared_ptr<Car_infor>>& dis_infor, std::vector <std::shared_ptr<Car_infor>>& sound_info, std::vector <std::shared_ptr<Car_infor>>& general_info);
+void chooseSettingMenu(listFeature <Car_infor>& display, listFeature <Car_infor>& sound, listFeature <Car_infor>& general);
 
-void choosePrintSettingMenu(std::vector <std::shared_ptr<Car_infor>>& dis_infor, std::vector <std::shared_ptr<Car_infor>>& sound_info, std::vector <std::shared_ptr<Car_infor>>& general_info);
+void choosePrintSettingMenu(listFeature <Car_infor>& display, listFeature <Car_infor>& sound, listFeature <Car_infor>& general);
 
-void chooseMenu(std::vector <std::shared_ptr<Car_infor>>& dis_infor, std::vector <std::shared_ptr<Car_infor>>& sound_info, std::vector <std::shared_ptr<Car_infor>>& general_info);
+void chooseSortModeMenu(listFeature <Car_infor>& display, listFeature <Car_infor>& sound, listFeature <Car_infor>& general);
+
+void chooseMenu(listFeature <Car_infor>& display, listFeature <Car_infor>& sound, listFeature <Car_infor>& general);
 
 #endif

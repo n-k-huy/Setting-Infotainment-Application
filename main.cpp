@@ -44,7 +44,7 @@ void seperateDataString(std::string& inputString, std::vector <std::string>& res
 int main()
 {
 	// Data Display, Sound, General
-	std::vector <std::shared_ptr <Car_infor>> dispalySetting = display.getSettingList();
+	std::vector <std::shared_ptr <Car_infor>> displaySetting = display.getSettingList();
 	std::vector <std::shared_ptr <Car_infor>> soundSetting = sound.getSettingList();
 	std::vector <std::shared_ptr <Car_infor>> generalSetting = general.getSettingList();
 
@@ -138,23 +138,16 @@ int main()
 		std::shared_ptr <Car_infor> general = std::make_shared <General>(name, id, email, odo, service_remind, timezone, language);		// General
 
 		// Put into vector result
-		dispalySetting.push_back(display);
+		displaySetting.push_back(display);
 		soundSetting.push_back(sound);
 		generalSetting.push_back(general);
 	}
 
-	// chooseMenu(dispalySetting, soundSetting, generalSetting);
-
-	display.setSettingList(dispalySetting);
+	display.setSettingList(displaySetting);
 	sound.setSettingList(soundSetting);
 	general.setSettingList(generalSetting);
 
-	auto result = display.sortFollowID();
-
-	for (auto& ele : result)
-	{
-		ele->output();
-	}
+	chooseMenu(display, sound, general);
 
 	return 1;
 }
