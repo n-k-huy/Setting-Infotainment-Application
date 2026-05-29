@@ -74,7 +74,8 @@ void menu()
 	std::cout << "-------SELECT MENU-----------" << std::endl;
 	std::cout << " 1/ Input Setting Information" << std::endl;
 	std::cout << " 2/ Print Setting Information" << std::endl;
-	std::cout << " 3/ Exits" << std::endl;
+	std::cout << " 3/ Sort Setting Information" << std::endl;
+	std::cout << " 4/ Exits" << std::endl;
 	std::cout << "MOI NHAP LUA CHON: ";
 }
 
@@ -96,6 +97,15 @@ void printSettingMenu()
 	std::cout << " 3/ Print General Setting Information" << std::endl;
 	std::cout << " 4/ Print All Setting Information" << std::endl;
 	std::cout << " 5/ Go back" << std::endl;
+	std::cout << "MOI NHAP LUA CHON: ";
+}
+
+void printSortModeMenu()
+{
+	std::cout << "-------SELECT MENU-----------" << std::endl;
+	std::cout << " 1/ Sort follow ID" << std::endl;
+	std::cout << " 2/ Sort follow name" << std::endl;
+	std::cout << " 3/ Go back" << std::endl;
 	std::cout << "MOI NHAP LUA CHON: ";
 }
 
@@ -551,7 +561,7 @@ void choosePrintSettingMenu(listFeature <Car_infor>& display, listFeature <Car_i
 			std::getline(std::cin, chooseMode);
 
 			// Dua ra thong bao nguoi dung nhap sai
-			if (chooseMode.length() > 1 || chooseMode[0] < '0' || chooseMode[0] > ('0' + NUNMBER_PRINT_SETTING_MENU_MODE))
+			if (chooseMode.length() > 1 || chooseMode[0] < '0' || chooseMode[0] > ('0' + NUMBER_PRINT_SETTING_MENU_MODE))
 			{
 				std::cout << "NHAP SAI. VUI LONG NHAP LAI." << std::endl;
 				system("pause");
@@ -560,7 +570,7 @@ void choosePrintSettingMenu(listFeature <Car_infor>& display, listFeature <Car_i
 			}
 
 
-		} while (chooseMode.length() > 1 || chooseMode[0] < '0' || chooseMode[0] > ('0' + NUNMBER_PRINT_SETTING_MENU_MODE));
+		} while (chooseMode.length() > 1 || chooseMode[0] < '0' || chooseMode[0] > ('0' + NUMBER_PRINT_SETTING_MENU_MODE));
 
 		// Lua chon Mode
 		system("cls");
@@ -677,7 +687,7 @@ void choosePrintSettingMenu(listFeature <Car_infor>& display, listFeature <Car_i
 
 				break;
 			}
-			case ('0' + NUNMBER_PRINT_SETTING_MENU_MODE):
+			case ('0' + NUMBER_PRINT_SETTING_MENU_MODE):
 			{
 				return chooseMenu(display, sound, general);
 			}
@@ -687,11 +697,6 @@ void choosePrintSettingMenu(listFeature <Car_infor>& display, listFeature <Car_i
 
 void chooseSortModeMenu(listFeature <Car_infor>& display, listFeature <Car_infor>& sound, listFeature <Car_infor>& general)
 {
-	// Take setting info
-	auto dis_infor = display.getSettingList();
-	auto sound_info = sound.getSettingList();
-	auto general_info = general.getSettingList();
-
 	std::string chooseMode;
 	char wantToChooseMore = 'Y';
 
@@ -702,13 +707,13 @@ void chooseSortModeMenu(listFeature <Car_infor>& display, listFeature <Car_infor
 		do
 		{
 			// Hien thi menu cho nguoi dung
-			// printSortModeMenu();
+			printSortModeMenu();
 
 			// Nguoi dung nhap du lieu
 			std::getline(std::cin, chooseMode);
 
 			// Dua ra thong bao nguoi dung nhap sai
-			if (chooseMode.length() > 1 || chooseMode[0] < '0' || chooseMode[0] > ('0' + NUNMBER_PRINT_SETTING_MENU_MODE))
+			if (chooseMode.length() > 1 || chooseMode[0] < '0' || chooseMode[0] > ('0' + NUMBER_SORT_MENU_MODE))
 			{
 				std::cout << "NHAP SAI. VUI LONG NHAP LAI." << std::endl;
 				system("pause");
@@ -717,7 +722,7 @@ void chooseSortModeMenu(listFeature <Car_infor>& display, listFeature <Car_infor
 			}
 
 
-		} while (chooseMode.length() > 1 || chooseMode[0] < '0' || chooseMode[0] > ('0' + NUNMBER_PRINT_SETTING_MENU_MODE));
+		} while (chooseMode.length() > 1 || chooseMode[0] < '0' || chooseMode[0] > ('0' + NUMBER_SORT_MENU_MODE));
 
 		// Lua chon Mode
 		system("cls");
@@ -725,116 +730,35 @@ void chooseSortModeMenu(listFeature <Car_infor>& display, listFeature <Car_infor
 		{
 			case '1':
 			{
-				// STT	OWNER NAME	ID	ODO	SERVICE REMIND	LIGHT	SCREEN LIGHT	TAPLO LIGHT
-				try
-				{
-					dis_infor.at(0)->outputFormat();
-				}
-				catch (const std::out_of_range& e)
-				{
-					std::cout << "Exception: " << e.what() << std::endl;
-				}
-				outputInforCar(dis_infor);
+				auto dis_info = display.sortFollowID();
+				auto sound_info = sound.sortFollowID();
+				auto general_info = general.sortFollowID();
 
-				system("pause");
-				system("cls");
+				outputInforCar(dis_info);
+				std::cout << std::endl;
+				outputInforCar(sound_info);
+				std::cout << std::endl;
+				outputInforCar(general_info);
+				std::cout << std::endl;
 
 				break;
 			}
 			case '2':
 			{
-				// STT	OWNER NAME	ID	ODO	SERVICE REMIND	MEDIA	CALL	NAVIGATION	NOTIFICATION
-				try
-				{
-					sound_info.at(0)->outputFormat();
-				}
-				catch (const std::out_of_range& e)
-				{
-					std::cout << e.what() << std::endl;
-				}
+				auto dis_info = display.sortFollowName();
+				auto sound_info = sound.sortFollowName();
+				auto general_info = general.sortFollowName();
+
+				outputInforCar(dis_info);
+				std::cout << std::endl;
 				outputInforCar(sound_info);
-
-				system("pause");
-				system("cls");
-
-				break;
-			}
-			case '3':
-			{
-				// STT	OWNER NAME	ID	ODO	SERVICE REMIND	TIME ZONE	LANGUAGE
-				try
-				{
-					general_info.at(0)->outputFormat();
-				}
-				catch (const std::out_of_range& e)
-				{
-					std::cout << e.what() << std::endl;
-				}
+				std::cout << std::endl;
 				outputInforCar(general_info);
-
-				system("pause");
-				system("cls");
+				std::cout << std::endl;
 
 				break;
 			}
-			case '4':
-			{
-				try
-				{
-					std::cout << std::left << std::setw(6) << "STT";			// STT
-					std::cout << std::left << std::setw(20) << "OWNER NAME";  // Name
-					std::cout << std::left << std::setw(15) << "ID";              // Id
-					std::cout << std::left << std::setw(30) << "EMAIL";      // Email
-					std::cout << std::left << std::setw(15) << "ODO";        // Odo
-					std::cout << std::left << std::setw(20) << "SERVICE REMIND";      // Service remind
-
-					std::cout << std::left << std::setw(20) << "LIGHT";			// Light level
-					std::cout << std::left << std::setw(20) << "SCREEN LIGHT";      // Screen light level
-					std::cout << std::left << std::setw(20) << "TAPLO LIGHT";      // Taplo 
-
-					std::cout << std::left << std::setw(20) << "MEDIA";			// Media volumn level
-					std::cout << std::left << std::setw(20) << "CALL";      // Call volumn level
-					std::cout << std::left << std::setw(20) << "NAVIGATION";      // Navigation volumn level
-					std::cout << std::left << std::setw(20) << "NOTIFICATION";      // Notification volumn level
-
-					std::cout << std::left << std::setw(50) << "TIME ZONE";			// Time zone
-					std::cout << std::left << std::setw(20) << "LANGUAGE";          // Language
-
-					std::cout << std::endl;
-
-					for (int index = 0; index < dis_infor.size(); index++)
-					{
-						std::cout << index + 1 << std::left << std::setw(5) << ".";
-
-						std::cout << std::left << std::setw(20) << dis_infor.at(index)->getOwnerName();  // Name
-
-						std::string id;
-						for (const int& val : dis_infor.at(index)->getId())
-							id += std::to_string(val);
-						std::cout << std::left << std::setw(15) << id;              // Id
-
-						std::cout << std::left << std::setw(30) << dis_infor.at(index)->getEmail();      // Email
-						std::cout << std::left << std::setw(15) << dis_infor.at(index)->getOdo();        // Odo
-						std::cout << std::left << std::setw(20) << std::to_string(dis_infor.at(index)->getServiceRemind());      // Service remind
-
-						dis_infor.at(index)->outputDistinctAttribute();
-						sound_info.at(index)->outputDistinctAttribute();
-						general_info.at(index)->outputDistinctAttribute();
-
-						std::cout << std::endl;
-					}
-				}
-				catch (const std::out_of_range& e)
-				{
-					std::cout << e.what() << std::endl;
-				}
-
-				system("pause");
-				system("cls");
-
-				break;
-			}
-			case ('0' + NUNMBER_PRINT_SETTING_MENU_MODE):
+			case ('0' + NUMBER_SORT_MENU_MODE):
 			{
 				return chooseMenu(display, sound, general);
 			}

@@ -1,1 +1,3 @@
 Common: kim huy/nguyenhuy@gmail.com/12345678/4567/5000 Display: 1/2/3 Sound: 1/2/3/4 General: Vietnamese/(GMT+07:00) Bangkok, Hanoi, Jakarta
+Common: ky duyen/kyduyen@gmail.com/23456789/6789/10000 Display: 2/3/4 Sound: 4/5/6/7 General: Vietnamese/(GMT-10:00) Hawaii
+Common: thanh tam/thanhtam@gmail.com/67891234/2345/6000 Display: 3/4/5 Sound: 5/6/7/8 General: Vietnamese/(GMT-01:00) Azores

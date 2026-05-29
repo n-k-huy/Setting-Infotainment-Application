@@ -11,7 +11,8 @@
 
 #define NUMBER_MENU_MODE 4
 #define NUMBER_SETTING_MENU_MODE 4
-#define NUNMBER_PRINT_SETTING_MENU_MODE 5
+#define NUMBER_PRINT_SETTING_MENU_MODE 5
+#define NUMBER_SORT_MENU_MODE 3
 
 std::vector <std::string> downloadTimeZone();
 
